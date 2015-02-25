@@ -6,7 +6,8 @@ from django.contrib.auth.models import User
 
 class UserProfile(models.Model):
 	"""
-	UserProfile is a model to store aditional user data
+	UserProfile is a model to store extended profile information
+	of an user, as well as having functions 
 	"""
 	user = models.OneToOneField(User)
 
@@ -20,11 +21,24 @@ class UserProfile(models.Model):
 	def __unicode__(self):
 		return "%s" % self.user		
 
-class CharityProfile(models.Model):
+class Charity(models.Model):
 	"""
-	CharityProfile is a model to store charity information
+	Charity is a model to store charity information
 	"""
-	name = models.CharField()
+	name = models.CharField(max_length=255)
+	description = models.TextField()
+	#images =  #(for the prototype, just store url(s))
+
 
 	def __unicode__(self):
 		return "%s" % self.name
+
+class Donation(models.Model):
+	"""
+	Donation model stores information about who donates
+	what quantity to which charity
+	"""
+	user = models.ForeignKey(User)
+	ammount = models.FloatField() # TODO: use django money
+	charity = models.ForeignKey(Charity)
+	#timestamp = model.
