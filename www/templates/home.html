@@ -21,26 +21,58 @@
 		
 		<!-- Latest compiled and minified CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<style>
 
+		* {
+		margin: 0;
+		}
+		html, body {
+		height: 100%;
+		}
+		.wrapper {
+		min-height: 100%;
+		height: auto !important;
+		height: 100%;
+		margin: 0 auto -4em;
+		}
+		.footer, .push {
+		height: 4em;
+		}
+
+		.navbar-toggle{
+			margin-left: 9px;
+			margin-right: 0px !important;
+			float: left !important;
+		}
+		
+
+		</style>
     </head>
     <body>
-    	<div id="wrapper">
+    	<div class="wrapper">
+    		<nav class="navbar navbar-default">
+		        <div class="container-fluid">
+		          <div class="navbar-header">
+		            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+		              <span class="sr-only">Toggle navigation</span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		              <span class="icon-bar"></span>
+		            </button>
+		            <a class="navbar-brand" href="#">#Skid</a>
+		          </div>
+		          <div id="navbar" class="navbar-collapse collapse">
+		            <ul class="nav navbar-nav">
+		              <li class="active"><a href="#">Home</a></li>
+		              <li><a href="#">About</a></li>
+		              <li><a href="#">Contact</a></li>
+		          </div><!--/.nav-collapse -->
+		        </div><!--/.container-fluid -->
+		    </nav>
 	        <!--[if lt IE 7]>
 	            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 	        <![endif]-->
 	        <div id="content">
-		        <div class="container">
-		        	<div class="navbar-header page-scroll" style="background-color: rgb(50,97,173);">
-		                <h1 class="title">h1.title</h1>
-		                <nav>
-		                    <ul>
-		                        <li><a href="#">nav ul li a</a></li>
-		                        <li><a href="#">nav ul li a</a></li>
-		                        <li><a href="#">nav ul li a</a></li>
-		                    </ul>
-		                </nav>
-		            </div>
-		        </div>
 
 		        <div class="container-fluid">
 		            <div class="main wrapper clearfix">
@@ -59,15 +91,15 @@
 		            </div> <!-- #main -->
 		        </div> <!-- #main-container -->
 		    </div>
-			<div id="footer">
-		        <div class="container-fluid">
-		            <footer class="wrapper">
-		                <h3>footer</h3>
-		            </footer>
-		       </div>
-		    </div> 
-		        
+		    <div class="push"></div> 
 	    </div>
+	    <div class="footer">
+	        <div class="container-fluid">
+	            <footer class="wrapper">
+	                <h3>footer</h3>
+	            </footer>
+	       </div>
+	    </div> 
     	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
     </body>
 </html>
