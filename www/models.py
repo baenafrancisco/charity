@@ -41,4 +41,4 @@ class Donation(models.Model):
 	user = models.ForeignKey(User)
 	ammount = models.FloatField() # TODO: use django money
 	charity = models.ForeignKey(Charity)
-	#timestamp = model.
+	timestamp = models.DateTimeField(auto_now_add=True)
