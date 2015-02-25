@@ -11,5 +11,7 @@ urlpatterns = patterns('',
     url(r'^api/api_call_example/$', 'www.views.api_call_example', name='api_call_example'),
     url(r'^api/api_call_example/2/$', 'www.views.api_call_example2', name='api_call_example2'),
     url(r'^api/getnextcharities/$', 'www.views.get_next_charities', name='get_next_charities'),
+    url(r'^api/donatetocharity/$', 'www.views.donate_to_charity', name='donate_to_charity'),
+    url(r'^api/declinedonation/$', 'www.views.decline_donation', name='decline_donation'),
 
 )

@@ -1,6 +1,8 @@
+# -*- coding: utf-8 -*-
 import json
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 from .models import *
 
 def home(request):
@@ -53,10 +55,16 @@ def api_call_example2(request):
 
 
 def get_next_charities(request):
-
 	'''
-	This function should return next n (GET) charities.
-	If n is not specified, default is 10
+	[GET] - /api/getnextcharities/
+
+	-Parameters
+	n (=10): number of charities
+
+	-Response
+
+	Returns next n charities.
+	If n is not specified, returns 10. If there are not more charities, returns an empty list ([]).
 	'''
 
 
@@ -101,4 +109,51 @@ def get_next_charities(request):
 
 	# We return an HTTP response with the information in JSON
 	return HttpResponse(json.dumps(charities), content_type="application/json")
+
+
+def donate_to_charity(request):
+	'''
+	[POST] - /api/donatetocharity/
+
+	-Parameters
+		id : id of the charity to donate. Compulsory.
+
+	-Response
+
+	The response will be an object a status variable. The status can be one of the 3 following:
+		-success: 10 pence have been donated to the charity specified
+		-no_more_credit: the user has not enough credit to make donations
+		-bad_request: id parameter hasn’t been specified in the request
+
+	'''
+
+	response = {"status":"bad_request"}
+
+	# TODO: implement donate_to_charity logic
+
+	# We return an HTTP response with the information in JSON
+	return HttpResponse(json.dumps(response), content_type="application/json")
+
+def decline_donation(request):
+	'''
+	[POST] - /api/declinedonation/
+
+	-Parameters
+		id : id of the charity to decline donation. Compulsory.
+
+
+	-Response
+
+	The response will be an object a status variable. The status can be one of the 3 following:
+		-success: the record has been correctly
+		-bad_request:  id parameter hasn’t been specified in the request
+
+	'''
+
+	response = {"status":"bad_request"}
+
+	# TODO: implement decline_donation logic
+
+	# We return an HTTP response with the information in JSON
+	return HttpResponse(json.dumps(response), content_type="application/json")
 
