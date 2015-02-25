@@ -11,7 +11,7 @@ class UserProfile(models.Model):
 	"""
 	user = models.OneToOneField(User)
 	balance = models.FloatField(default=0) # People first top up their account
-	seen = models.ForeignKey('Charity') # Charities already seen
+	seen = models.ManyToManyField('Charity', blank=True, null=True) # Charities already seen
 	#country?
 	#what_else?
 
@@ -23,17 +23,26 @@ class UserProfile(models.Model):
 	'''
 
 	def __unicode__(self):
-		return "%s" % self.user		
+		return "%s" % self.user	
+
+class Image(models.Model):
+	"""
+	Image
+	"""
+	url = models.URLField()
+	
+	def __unicode__(self):
+		return "<Image: %s>" % self.url
+				
 
 class Charity(models.Model):
 	"""
 	Charity is a model to store charity information
 	"""
 	name = models.CharField(max_length=255)
-	description = models.TextField()
-	#images =  #(for the prototype, just store url(s))
+	description = models.TextField(blank=True, null=True)
+	images =  models.ManyToManyField(Image, blank=True, null=True)
 	#reputation?
-
 
 	def __unicode__(self):
 		return "%s" % self.name
@@ -44,6 +53,6 @@ class Donation(models.Model):
 	what quantity to which charity
 	"""
 	user = models.ForeignKey(User)
-	ammount = models.FloatField() # TODO: use django money
+	ammount = models.FloatField(default=5) # TODO: use django money
 	charity = models.ForeignKey(Charity)
 	timestamp = models.DateTimeField(auto_now_add=True)
