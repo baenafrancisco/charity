@@ -17,5 +17,4 @@ def api_call_example(request):
 
 	# Example response object
 	response = { 'status':'success' }
-
-	return HttpResponse(json.dumps(response)), content_type="application/json")
+	return HttpResponse(json.dumps(response), content_type="application/json")
