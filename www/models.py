@@ -10,6 +10,8 @@ class UserProfile(models.Model):
 	of an user, as well as having functions 
 	"""
 	user = models.OneToOneField(User)
+	#country?
+	#what_else?
 
 	'''
 	Example funcitons
