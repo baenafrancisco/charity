@@ -10,6 +10,10 @@ class UserProfile(models.Model):
 	of an user, as well as having functions 
 	"""
 	user = models.OneToOneField(User)
+	balance = models.FloatField(default=0) # People first top up their account
+	seen = models.ForeignKey('Charity') # Charities already seen
+	#country?
+	#what_else?
 
 	'''
 	Example funcitons
@@ -28,6 +32,7 @@ class Charity(models.Model):
 	name = models.CharField(max_length=255)
 	description = models.TextField()
 	#images =  #(for the prototype, just store url(s))
+	#reputation?
 
 
 	def __unicode__(self):
@@ -41,4 +46,4 @@ class Donation(models.Model):
 	user = models.ForeignKey(User)
 	ammount = models.FloatField() # TODO: use django money
 	charity = models.ForeignKey(Charity)
-	#timestamp = model.
+	timestamp = models.DateTimeField(auto_now_add=True)
