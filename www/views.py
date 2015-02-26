@@ -110,7 +110,7 @@ def get_next_charities(request):
 	# We return an HTTP response with the information in JSON
 	return HttpResponse(json.dumps(charities), content_type="application/json")
 
-
+@csrf_exempt
 def donate_to_charity(request):
 	'''
 	[POST] - /api/donatetocharity/
@@ -134,6 +134,7 @@ def donate_to_charity(request):
 	# We return an HTTP response with the information in JSON
 	return HttpResponse(json.dumps(response), content_type="application/json")
 
+@csrf_exempt
 def decline_donation(request):
 	'''
 	[POST] - /api/declinedonation/
@@ -147,12 +148,23 @@ def decline_donation(request):
 	The response will be an object a status variable. The status can be one of the 3 following:
 		-success: the record has been correctly
 		-bad_request:  id parameter hasn’t been specified in the request
+		-failure: some error happened
 
 	'''
 
 	response = {"status":"bad_request"}
+	# If the id var is in the POST variable
 
-	# TODO: implement decline_donation logic
+	if 'id' in request.POST:
+		try:
+			charity = Charity.objects.get(id=request.POST['id'])
+			user_profile = UserProfile.objects.get(user=request.user)
+			user_profile.seen.add(charity)
+			user_profile.save()
+			response["status"]="success"
+			
+		except:
+			response["status"]="failure"
 
 	# We return an HTTP response with the information in JSON
 	return HttpResponse(json.dumps(response), content_type="application/json")
