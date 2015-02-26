@@ -223,7 +223,7 @@
     </head>
     <body>
     	<div id="LeftDrop" class="DropZone"></div>
-    	
+
     	<div id="phone">
 
 	    	<div class="wrapper">
@@ -300,12 +300,20 @@
 		var originalLeft = $(".card.this").position().left;
 		var originalTop = $(".card.this").position().top;
 
-		var jsonString = '[{"id": 1, "name": "Oxfam", "images": ["Oxfam"], "description": "Help us provide clean water to thousands of people across Africa"},'+
-		'{"id": 2, "name": "Prostate Cancer", "images": ["Prostate Cancer"], "description": "Battle Prostate Disease by contributing to awesome research"},'+
-		'{"id": 3, "name": "Dogs Trust", "images": ["Dogs Trust"], "description": "Every one lieks dogs, unless you are a cat person then just swipe left bye"},'+
-		'{"id": 4, "name": "TRAOA", "images": ["TRAOA"], "description": "tbh i dont know what this charity is..."},'+
-		'{"id": 5, "name": "Youth Sport Trust", "images": ["Youth Sport Trust"], "description": "Contribute to making young peoples live better by compuslory militery excersise programs"}]';
-		var json = JSON.parse(jsonString);
+		var fetchedCharities = []
+
+		function onCharityData(results){
+			fetchedCharities = results;
+			addNextCard();
+		}
+
+		function getNextCharity(){
+			return fetchedCharities.shift()
+		}
+
+		function getNextAPICards(){
+			$.getJSON("/api/getnextcharities/", {}, onCharityData)
+		}
 
 		var nextCard =  '<div class="next card">'+
 			                	'<img class="name" src="" />'+
@@ -314,37 +322,6 @@
 			                	'<div class="cardbottoms"></div>'+
 			                '</div>';
 
-
-		// function onCharityData(data){
-		//     for(i in data){
-		//         var randomColour = Math.floor(Math.random()*charityColours.length);
-		//         var currentCharity = data[i];
-		//         charity = $(".card").clone();
-		//         charity.css("display","inline-block");
-		//         charity.css("background-color", charityColours[randomColour]); 
-		//         charity.attr("id","Charity" + currentCharity.id);
-		//         //charity.find("#Title").text(currentCharity.name);
-		//         charity.find(".name").attr("src", currentCharity.images[0]);
-		//         charity.find(".info").text(currentCharity.description);
-		//         $("#Container").prepend(charity);
-		//     }
-		// }
-
-		// Emulate an AJAX request and callback
-		// var a = 0;
-		// function fetchCharities(){
-		//     // Make AJAX request...
-		//     if(a == 0){
-		//     onCharityData(JSON.parse());
-		//         a = a + 1;
-		//     }
-		//     else {
-		//         onCharityData(JSON.parse('[{"id": 3, "name": "Breast cancer research", "images":  ["http://my-faith-and-fitness.com/wp-content/uploads/2014/10/breast_cancer_research_foundation.jpg"], "description": "..."}]'));
-		//         a = a + 1;
-		//     }
-		    
-		//     activateFrontCharity();
-		// }
 
 		// Apply transformations to $(e) based on its position
 
@@ -363,7 +340,6 @@
 		            applyFX(ui.helper);
 		        },
 		        revert: function(){
-		            console.log("Revert");
 		            var helper = $(".ui-draggable");
 		            helper.animate({    
 		                opacity: 1,
@@ -378,41 +354,47 @@
 
 		            return false;
 		        },
-		        stop: function(ev,ui){
-		            console.log("Stop");  
-		            
-		        }
 		    });
 		}
 
-		var c = 1;
 		var m8youareamazeballs = "<p>well done you are a great person</p><br/><button class='reloadDemo'>reload demo</button><div class='cardbottoms'></div>";
 
-		function removeCharity(ui){
+		function addNextCard(){
+			var charity = getNextCharity()
+			if(typeof charity === "undefined"){
+				$('.next.card').html(m8youareamazeballs);
+			}
+			else if( $('.this.card .name').attr("src") == "" ){
+				$('.this.card .name').attr('src', "static/img/"+charity.name+"banner.png");
+				$('.this.card .photo').attr('src', "static/img/"+charity.images+"square.png");
+		    	$('.this.card .info').html(charity.description);
+				addNextCard();
+			}
+			else {
+				$('.next.card .name').attr('src', "static/img/"+charity.name+"banner.png");
+				$('.next.card .photo').attr('src', "static/img/"+charity.images+"square.png");
+			    $('.next.card .info').html(charity.description);
+			}
 
-			c++;
+
+			// make new .this card draggable
+		    activateFrontCharity();
+		}
+
+		function removeCharity(ui){
 
 			// remove the .this.card
 		    $('.this.card').remove(); 
 
 		    // change .next card to .this
 		    $('.next.card .cardbottoms').remove();
-		    $('.next.card').removeClass('next').addClass('this'); 
-
-			// make new .this card draggable
-		    activateFrontCharity(); 
+			$('.next.card').removeClass('next').addClass('this');
 
 		    // insert new .next card
 		    $(nextCard).insertBefore('.options');
 
 		    //populate new .next card with data (using static folder cos working local atm)
-		    if(c < json.length){
-				$('.next.card .name').attr('src', imageURL+json[c].name+"banner.png");
-				$('.next.card .photo').attr('src', imageURL+json[c].images+"square.png");
-			    $('.next.card .info').html(json[c].description);
-			}else{
-				$('.next.card').html(m8youareamazeballs);
-			}
+			addNextCard();
 		}
 
 		$(".DropZone").droppable({
@@ -424,16 +406,8 @@
 		});
 
 		$(function(){
-			activateFrontCharity();
-
-			//var imageURL = "http://static.qea.me/charity/img/";
-			$('.this.card .name').attr('src', imageURL+json[0].name+"banner.png");
-			$('.this.card .photo').attr('src', json[0].images);
-		    $('.this.card .info').html(json[0].description);
-
-		    $('.next.card .name').attr('src', imageURL+json[1].name+"banner.png");
-			$('.next.card .photo').attr('src', json[1].images);
-		    $('.next.card .info').html(json[1].description);
+	
+			getNextAPICards();
 
 		    $('.DropZone, #phone').height($(window).height());
 		    var dropZoneWidth = (($(window).width() - $('#phone').outerWidth()) / 2);
