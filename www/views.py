@@ -35,7 +35,7 @@ def home(request):
 
 	context = { 'name':'darryl'}
 	f = UserProfile.objects.get(user=request.user)
-	print f.donated_quantity()
+
 	# one line comment
 
 	'''
