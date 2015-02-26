@@ -31,6 +31,7 @@
 		}
 		html, body {
 			height: 100%;
+			color: #eee;
 		}
 		.wrapper {
 		/*min-height: 100%;*/
@@ -174,6 +175,7 @@
 			margin-left: auto;
 			margin-right: auto;
 			background-color: #666666; /*#454545*/
+			height:100%;
 
 		}
 
@@ -217,13 +219,28 @@
 			bottom: -38px;
 		}
 
+		.charity-container{
+			width: 100%;
+			margin: 0 auto;
+			height: 430px;
+			background-color: #fff;
+			border-radius: 10px;
+			border: 1px #666666 solid;
+			-webkit-user-select: none;
+			left: 15px;
+			top: 72px;
+			transform: rotate(-0.176942443847656deg);
+			opacity: 1;
+		}
+
+
 		</style>
 
 
     </head>
     <body>
     	<div id="LeftDrop" class="DropZone"></div>
-
+    	
     	<div id="phone">
 
 	    	<div class="wrapper">
@@ -241,7 +258,7 @@
 			          <div id="navbar" class="navbar-collapse collapse">
 			            <ul class="nav navbar-nav">
 			              <li class="active"><a href="/templates/home.html">Donate</a></li>
-			              <li><a href="/charities/">Charities</a></li>
+			              <li><a href="/templates/charity_profile.html">Charities</a></li>
 			              <li><a href="/templates/user_profile.html">Me</a></li>
 			          </div><!--/.nav-collapse -->
 			        </div><!--/.container-fluid -->
@@ -255,26 +272,44 @@
 			            <div class="main wrapper clearfix">
 
 			            	<!-- <div class="cards"> -->
-				                <div class="this card">
-				                	<img class="name" src="" />
-				                	<img class="photo" src="" />
-				                	<p class="info"></p>
+				            <!--   
+				                <div class="charity-container">
+				                	
 				                </div>
+				            -->
+				            <div class="row">
+				            	<div class="col-md-12">
+				            		<h1>Charity League Table</h1>
+				            	</div>
+				            </div>
+				           	<!-- Make this area scrollable and keep the title -->
+				            <div class='scroll'>
+					            	
+				            	<section>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<img class="banner" height="100" width="358" src="../static/img/Oxfambanner.png" />
+						            	</div>
+						            </div>
 
-				                <div class="next card">
-				                	<img class="name" src="" />
-				                	<img class="photo" src="" />
-				                	<p class="info"></p>
-				                	<div class="cardbottoms"></div>
-				                </div>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<h3>Total donations so far:</h3>
+						            	</div>
+						            </div>
+
+						           	<div class="row">
+						            	<div class="col-md-12">
+						            		<h3>£150,334</h3>
+						            	</div>
+						            </div>
+						            </hr>
+					        	</section>
+
+				        	</div>
 
 				                <!-- <div class="cardbottoms"></div> -->
 			            	<!-- </div> -->
-
-			                <div class="options">
-			                	<button class="nope"></button>
-			                	<button class="donate">£1</button>
-			                </div>
 
 			            </div> <!-- #main -->
 			        </div> <!-- #main-container -->
@@ -293,27 +328,20 @@
 
 		<div id="RightDrop" class="DropZone"></div>
 
-    	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')
+    	<script>
+    	window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')
 
     	// Where the charity cards originally appear in the document
 
 		var originalLeft = $(".card.this").position().left;
 		var originalTop = $(".card.this").position().top;
 
-		var fetchedCharities = []
-
-		function onCharityData(results){
-			fetchedCharities = results;
-			addNextCard();
-		}
-
-		function getNextCharity(){
-			return fetchedCharities.shift()
-		}
-
-		function getNextAPICards(){
-			$.getJSON("http://bae.im/api/getnextcharities/", {}, onCharityData)
-		}
+		var jsonString = '[{"id": 1, "name": "Oxfam", "images": ["Oxfam"], "description": "Help us provide clean water to thousands of people across Africa"},'+
+		'{"id": 2, "name": "Prostate Cancer", "images": ["Prostate Cancer"], "description": "Battle Prostate Disease by contributing to awesome research"},'+
+		'{"id": 3, "name": "Dogs Trust", "images": ["Dogs Trust"], "description": "Every one lieks dogs, unless you are a cat person then just swipe left bye"},'+
+		'{"id": 4, "name": "TRAOA", "images": ["TRAOA"], "description": "tbh i dont know what this charity is..."},'+
+		'{"id": 5, "name": "Youth Sport Trust", "images": ["Youth Sport Trust"], "description": "Contribute to making young peoples live better by compuslory militery excersise programs"}]';
+		var json = JSON.parse(jsonString);
 
 		var nextCard =  '<div class="next card">'+
 			                	'<img class="name" src="" />'+
@@ -323,127 +351,38 @@
 			                '</div>';
 
 
-		// Apply transformations to $(e) based on its position
+		// function onCharityData(data){
+		//     for(i in data){
+		//         var randomColour = Math.floor(Math.random()*charityColours.length);
+		//         var currentCharity = data[i];
+		//         charity = $(".card").clone();
+		//         charity.css("display","inline-block");
+		//         charity.css("background-color", charityColours[randomColour]); 
+		//         charity.attr("id","Charity" + currentCharity.id);
+		//         //charity.find("#Title").text(currentCharity.name);
+		//         charity.find(".name").attr("src", currentCharity.images[0]);
+		//         charity.find(".info").text(currentCharity.description);
+		//         $("#Container").prepend(charity);
+		//     }
+		// }
 
-		function applyFX(e){
-		    var position = e.position().left - originalLeft;
-		    var absoffset = Math.abs(position);
-		    e.css("transform","rotate("+ position/10 + "deg)") ;
-		    //e.css("opacity", 1-absoffset/2000);
-		}
-		
-
-		function activateFrontCharity(){
-		    $(".this.card").draggable({
-		        drag: function(ev, ui){
-		            
-		            applyFX(ui.helper);
-		        },
-		        revert: function(){
-		            var helper = $(".ui-draggable");
-		            helper.animate({    
-		                opacity: 1,
-		                 top: originalTop,
-		                left: originalLeft
-		            }, {
-		                duration: 100,
-		                step: function(now) {
-		                    applyFX(helper);
-		                }
-		              });
-
-		            return false;
-		        },
-		    });
-		}
-
-		var m8youareamazeballs = "<p>well done you are a great person</p><br/><button class='reloadDemo'>reload demo</button><div class='cardbottoms'></div>";
-
-		function addNextCard(){
-			var charity = getNextCharity()
-			if(typeof charity === "undefined"){
-				$('.next.card').html(m8youareamazeballs);
-			}
-			else if( $('.this.card .name').attr("src") == "" ){
-				$('.this.card .name').attr('src', "static/img/"+charity.name+"banner.png");
-				$('.this.card .photo').attr('src', "static/img/"+charity.images+"square.png");
-		    	$('.this.card .info').html(charity.description);
-				addNextCard();
-			}
-			else {
-				$('.next.card .name').attr('src', "static/img/"+charity.name+"banner.png");
-				$('.next.card .photo').attr('src', "static/img/"+charity.images+"square.png");
-			    $('.next.card .info').html(charity.description);
-			}
-
-
-			// make new .this card draggable
-		    activateFrontCharity();
-		}
-
-		function removeCharity(ui){
-
-			// remove the .this.card
-		    $('.this.card').remove(); 
-
-		    // change .next card to .this
-		    $('.next.card .cardbottoms').remove();
-			$('.next.card').removeClass('next').addClass('this');
-
-		    // insert new .next card
-		    $(nextCard).insertBefore('.options');
-
-		    //populate new .next card with data (using static folder cos working local atm)
-			addNextCard();
-		}
-
-		$(".DropZone").droppable({
-		    drop: function( event, ui ) {
-		        ui.draggable.fadeOut(400, function(){ removeCharity(ui); });
-		      },
-		    tolerance: "intersect",
+		// Emulate an AJAX request and callback
+		// var a = 0;
+		// function fetchCharities(){
+		//     // Make AJAX request...
+		//     if(a == 0){
+		//     onCharityData(JSON.parse());
+		//         a = a + 1;
+		//     }
+		//     else {
+		//         onCharityData(JSON.parse('[{"id": 3, "name": "Breast cancer research", "images":  ["http://my-faith-and-fitness.com/wp-content/uploads/2014/10/breast_cancer_research_foundation.jpg"], "description": "..."}]'));
+		//         a = a + 1;
+		//     }
 		    
-		});
+		//     activateFrontCharity();
+		// }
 
-		$(function(){
-	
-			getNextAPICards();
-
-		    $('.DropZone, #phone').height($(window).height());
-		    var dropZoneWidth = (($(window).width() - $('#phone').outerWidth()) / 2);
-		    $('.DropZone').width(dropZoneWidth+"px");
-
-		    // relaod demo
-		    $('body').on('click', '.reloadDemo', function(){
-		    	location.reload();
-		    });
-
-		    // press nope button skip
-		    $('.nope').on('click', function(){
-		    	$(".this.card").animate({
-		    		left:-400
-		    	}, {
-		    		duration: 400,
-		    		complete: function(){
-		    			removeCharity();
-		    		}
-		    	});
-		    });
-
-		    // press donate button to donate
-		    $('.donate').on('click', function(){
-		    	$(".this.card").animate({
-		    		left:400
-		    	}, {
-		    		duration: 400,
-		    		complete: function(){
-		    			removeCharity();
-		    		}
-		    	}, 'ease');
-		    });
-		});
-
-		
-    	</script>
+		// Apply transformations to $(e) based on its position
+		</script>
     </body>
 </html>
