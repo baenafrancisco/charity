@@ -131,7 +131,7 @@ def get_next_charities(request):
 	except:
 		# Hackathon Error Handling: if there is any error
 		# we will get 1st user profile
-		user_profile = UserProfile.objects.get(user=1)
+		user_profile = UserProfile.objects.get(user=User.objects.get(user=1))
 
 	# We get a random set of the next n charities 
 	# that the user hasn't already seen
