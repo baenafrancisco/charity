@@ -26,7 +26,7 @@ ALLOWED_HOSTS = [   '.bae.im',
 SECRET_KEY = 'ea36opn=y*in&3g5x%d-(ybx9*1dn+*=3thx(@kz!usfc5j4i3'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = not ON_SERVER
+DEBUG = True
 
 TEMPLATE_DEBUG = True
 
