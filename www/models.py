@@ -23,7 +23,13 @@ class UserProfile(models.Model):
 		# return how much an user has donated
 	'''
 
-	def donated_quantity(self):
+	def number_of_donations(self):
+		'''
+		# Returns the number of donations of an user
+		'''
+		return Donation.objects.filter(user=self).count()
+
+	def ammount_donated(self):
 		'''
 		# Returns how much an user has donated
 		'''
@@ -59,7 +65,7 @@ class Charity(models.Model):
 
 	def donations_received(self):
 		'''
-		# Returns how much an user has donated
+		# Returns how many donations have been received.
 		'''
 		response = 0
 		query = Donation.objects.filter(charity=self).aggregate(Sum('ammount'))['ammount__sum']

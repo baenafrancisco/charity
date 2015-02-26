@@ -3,9 +3,35 @@ import json
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.models import User
 from .models import *
 
+'''
+HELPER FUNCTIONS
+'''
+
+def get_user_profile_or_create(user):
+	'''
+	Some more Hackathon Code :)
+	Gets an user profile or creates one with £5 of balance
+	'''
+	try:
+		profile = UserProfile.objects.get(user=user)
+	except:
+		profile = UserProfile(user=user, balance=5)
+
+	return profile
+
+
+'''
+VIEW FUNCTIONS
+'''
+
+
 def home(request):
+	"""
+	Displays the homepage
+	"""
 
 	context = { 'name':'darryl'}
 	f = UserProfile.objects.get(user=request.user)
@@ -18,44 +44,53 @@ def home(request):
 	return render(request,'home.html', context)
 
 
-
 def display_user_profile(request, user_id):
-	#user_profile = UserProfile.objects.get(user=request.user)
-	context = dict()
-	context["user_full_name"] = "John Smith"
-	context["user_top_charities"] = ["British Heart Foundation","Cancer Research UK", "Red Cross"]
-	context["user_total_donations"] = 42
-	context["user_friend_ranking"] = 10
-	context["user_world_ranking"] = 4096
+	"""
+	Displays an user profile, user #1 if there's an error
+	"""
+	try:
+		user = User.objects.get(pk=user_id)
+	except:
+		user = User.objects.get(pk=1)
+		
+	# Get the user profile
+	profile  = get_user_profile_or_create(user)
+
+	context = { 'user_full_name': user.get_full_name(),
+				'user_top_charities':["British Heart Foundation","Cancer Research UK", "Red Cross"], #TODO: implement top charities
+				'user_total_donations':profile.number_of_donations(),
+				'user_ammount_donated':profile.ammount_donated(),
+				'user_friend_ranking':10,
+				'user_world_ranking':4096
+	}
+	
 	return render(request,'user_profile.html', context)
 
 
 def display_charity_profile(request, charity_id):
+	"""
+	Displays a charity profile, #1 if there's an error
+	"""
 	try:
-		#charity = Charity.objects.get(id=charity_id)
-		# TODO: fetch values from model
-		context = dict()
-		context["charity_name"] = "Some Charity"
-
-		context["charity_description"] = \
-				"""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
-				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."""
-
-		context["charity_id"] = charity_id
-
-		context["charity_images"] = ["http://i0.kym-cdn.com/photos/images/facebook/000/011/296/success_baby.jpg",
-									 "http://i1.ytimg.com/vi/Dgosi8Mp41Q/hqdefault.jpg"]
-
-		context["charity_top_donors"] = ["Bob","Fred","Jeff"]
-
-		return render(request,'charity_profile.html', context)
+		charity = Charity.objects.get(pk=charity_id)
 	except:
-		pass
+		charity = Charity.objects.get(pk=2)
 
-	#TODO: Error page
-	return HttpResponse("<h1>No such charity</h1>")
+	# Create images list
+	images = []
+	for image in charity.images.all():
+		images.append(image.url)
+
+	context = {
+		'charity_name':charity.name,
+		'charity_description': charity.description,
+		'charity_id': charity.pk,
+		'charity_images':images,
+		'charity_top_donors': ["Bob","Fred","Jeff"],
+	}
+
+	return render(request,'charity_profile.html', context)
+
 
 
 def get_next_charities(request):
