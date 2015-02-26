@@ -315,7 +315,7 @@
 			$.getJSON("http://bae.im/api/getnextcharities/", {}, onCharityData)
 		}
 
-		var nextCard =  '<div class="next card">'+
+		var nextCard = '<div class="next card">'+
 			                	'<img class="name" src="" />'+
 			                	'<img class="photo" src="" />'+
 			                	'<p class="info"></p>'+
@@ -365,14 +365,14 @@
 				$('.next.card').html(m8youareamazeballs);
 			}
 			else if( $('.this.card .name').attr("src") == "" ){
-				$('.this.card .name').attr('src', "static/img/"+charity.name+"banner.png");
-				$('.this.card .photo').attr('src', "static/img/"+charity.images+"square.png");
+				$('.this.card .name').attr('src', "http://static.qea.me/charity/img/"+charity.name+"banner.png");
+				$('.this.card .photo').attr('src', charity.images);
 		    	$('.this.card .info').html(charity.description);
 				addNextCard();
 			}
 			else {
-				$('.next.card .name').attr('src', "static/img/"+charity.name+"banner.png");
-				$('.next.card .photo').attr('src', "static/img/"+charity.images+"square.png");
+				$('.next.card .name').attr('src', "http://static.qea.me/charity/img/"+charity.name+"banner.png");
+				$('.next.card .photo').attr('src', charity.images);
 			    $('.next.card .info').html(charity.description);
 			}
 
