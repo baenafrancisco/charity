@@ -1,9 +1,388 @@
+{% load staticfiles %}
 <!DOCTYPE html>
-<html>
-<head>
-	<title>Charities</title>
-</head>
-<body>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
 
-</body>
+        <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="{% static 'js/jquery1.11.min.js' %}"></script>
+
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
+		<!-- Latest compiled and minified JavaScript -->
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
+		
+		<!-- Latest compiled and minified CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+		<style>
+
+		* {
+		margin: 0;
+		}
+		html, body {
+			height: 100%;
+			color: #eee;
+		}
+		.wrapper {
+		/*min-height: 100%;*/
+		/*height: auto !important;*/
+		/*height: 100%;*/
+		margin: 0 auto -4em;
+		}
+		.footer, .push {
+		height: 4em;
+		}
+
+		.navbar-toggle{
+			margin-left: 9px;
+			margin-right: 0px !important;
+			float: left !important;
+		}
+
+		.navbar-default{
+			background-color: #666666 !important;
+			border-color:transparent !important; /* important yuk */
+		}
+
+		.navbar-default .navbar-nav>li.active>a, .navbar-nav>li>a:hover{
+			color:#fff !important;
+			background-color:transparent !important;
+		}
+
+		.navbar-default .navbar-nav>li>a{
+			color:#A5A5A5;
+			font-size:20px;
+		}
+
+		.card{
+			width:90%;
+			margin:0 auto;
+			height:430px;
+			background-color:#fff; /*rgb(229, 229, 229)*/
+			border-radius:10px;
+			cursor:pointer;
+			border:1px #666666 solid;
+			-webkit-user-select: none;  /* Chrome all / Safari all */
+			-moz-user-select: none;     /* Firefox all */
+ 			-ms-user-select: none;      /* IE 10+ */
+		}
+
+		img {
+			user-drag: none; 
+			-moz-user-select: none;
+			-webkit-user-drag: none;
+		}
+
+		.this.card{
+			position:absolute;
+			z-index:2;
+		}
+
+		.next.card{
+			position:absolute;
+			z-index:1;
+			
+		}
+
+		.card .name{
+			width:100%;
+			height:100px;
+			border-radius:10px 10px 0 0;
+
+		}
+
+		.card .photo{
+
+			width:200px;
+			height:200px;
+			display:block;
+			margin:0 auto;
+			margin-top:10px;
+
+		}
+
+		.options{
+			height:50px;
+			width:90%;
+			margin:0 auto;
+			padding:20px 40px 0 40px;
+			position: absolute;
+			z-index: 1;
+			bottom: 70px;
+		}
+
+		.options button{
+			width:80px;
+			height:80px;
+			border-radius:50px;
+			border:none;
+			outline:none;
+		}
+
+		.nope{
+			float:left;
+			background-color:#FF7878;
+			background-image:url("{% static 'img/nope.png' %}");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 40%;
+			
+		}
+
+		.donate{
+			float:right;
+			background-color:#5CE16A;
+			text-align: center;
+			font-family: arial;
+			font-size:40px;
+			color:#fff;
+
+		
+		}
+
+		.card > p{
+
+			width:90%;
+			text-align: left;
+			font-family: arial;
+			font-size:20px;
+			color:#555;
+			display:block;
+			margin:0 auto;
+			margin-top:10px;
+			line-height:25px;
+		}
+
+		#phone{
+
+			width:400px;
+			border:1px black solid;
+			position:relative;
+			position: absolute;
+			z-index: 0;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: #666666; /*#454545*/
+			height:100%;
+
+		}
+
+		#LeftDrop {
+    		/*float: left;*/
+    		left:0;
+		}
+		#RightDrop {
+		    /*float: right;*/
+		    right:0;
+		}
+		.DropZone {
+		    background-color: #fff; /*F0F0F0*/
+		    /*width: 200px;
+		    height:400px;*/
+		    position: absolute;
+			z-index: -4;
+		}
+
+		.reloadDemo{
+			display:block;
+			margin:0 auto;
+			width:70%;
+			height:100px;
+			color:#fff;
+			background-color:skyblue;
+			border: none;
+			font-size: 30px;
+			cursor:pointer;
+			outline:none;
+		}
+
+		.cardbottoms{
+			background-image:url("static/img/cardbutts.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			width: 100%;
+			height: 50px;
+			position: absolute;
+			margin: 0 auto;
+			bottom: -38px;
+		}
+
+		.charity-container{
+			width: 100%;
+			margin: 0 auto;
+			height: 430px;
+			background-color: #fff;
+			border-radius: 10px;
+			border: 1px #666666 solid;
+			-webkit-user-select: none;
+			left: 15px;
+			top: 72px;
+			transform: rotate(-0.176942443847656deg);
+			opacity: 1;
+		}
+
+
+		</style>
+
+
+    </head>
+    <body>
+    	<div id="LeftDrop" class="DropZone"></div>
+    	
+    	<div id="phone">
+
+	    	<div class="wrapper">
+	    		<nav class="navbar navbar-default">
+			        <div class="container-fluid">
+			          <div class="navbar-header">
+			            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			              <span class="sr-only">Toggle navigation</span>
+			              <span class="icon-bar"></span>
+			              <span class="icon-bar"></span>
+			              <span class="icon-bar"></span>
+			            </button>
+			            <a class="navbar-brand" href="#"></a>
+			          </div>
+			          <div id="navbar" class="navbar-collapse collapse">
+			            <ul class="nav navbar-nav">
+			              <li class="active"><a href="/templates/home.html">Donate</a></li>
+			              <li><a href="/templates/charity_profile.html">Charities</a></li>
+			              <li><a href="/templates/user_profile.html">Me</a></li>
+			          </div><!--/.nav-collapse -->
+			        </div><!--/.container-fluid -->
+			    </nav>
+		        <!--[if lt IE 7]>
+		            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+		        <![endif]-->
+		        <div id="content">
+
+			        <div class="container-fluid">
+			            <div class="main wrapper clearfix">
+
+			            	<!-- <div class="cards"> -->
+				            <!--   
+				                <div class="charity-container">
+				                	
+				                </div>
+				            -->
+				            <div class="row">
+				            	<div class="col-md-12">
+				            		<h1>Charity League Table</h1>
+				            	</div>
+				            </div>
+				           	<!-- Make this area scrollable and keep the title -->
+				            <div class='scroll'>
+					            	
+				            	<section>
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<img class="banner" height="100" width="358" src="../static/img/Oxfambanner.png" />
+						            	</div>
+						            </div>
+
+						            <div class="row">
+						            	<div class="col-md-12">
+						            		<h3>Total donations so far:</h3>
+						            	</div>
+						            </div>
+
+						           	<div class="row">
+						            	<div class="col-md-12">
+						            		<h3>£150,334</h3>
+						            	</div>
+						            </div>
+						            </hr>
+					        	</section>
+
+				        	</div>
+
+				                <!-- <div class="cardbottoms"></div> -->
+			            	<!-- </div> -->
+
+			            </div> <!-- #main -->
+			        </div> <!-- #main-container -->
+			    </div>
+			    <!-- <div class="push"></div>  -->
+		    </div>
+		    <!-- <div class="footer">
+		        <div class="container-fluid">
+		            <footer class="wrapper">
+		                <h3></h3>
+		            </footer>
+		       </div>
+		    </div> -->
+
+		</div>
+
+		<div id="RightDrop" class="DropZone"></div>
+
+    	<script>
+    	window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')
+
+    	// Where the charity cards originally appear in the document
+
+		var originalLeft = $(".card.this").position().left;
+		var originalTop = $(".card.this").position().top;
+
+		var jsonString = '[{"id": 1, "name": "Oxfam", "images": ["Oxfam"], "description": "Help us provide clean water to thousands of people across Africa"},'+
+		'{"id": 2, "name": "Prostate Cancer", "images": ["Prostate Cancer"], "description": "Battle Prostate Disease by contributing to awesome research"},'+
+		'{"id": 3, "name": "Dogs Trust", "images": ["Dogs Trust"], "description": "Every one lieks dogs, unless you are a cat person then just swipe left bye"},'+
+		'{"id": 4, "name": "TRAOA", "images": ["TRAOA"], "description": "tbh i dont know what this charity is..."},'+
+		'{"id": 5, "name": "Youth Sport Trust", "images": ["Youth Sport Trust"], "description": "Contribute to making young peoples live better by compuslory militery excersise programs"}]';
+		var json = JSON.parse(jsonString);
+
+		var nextCard =  '<div class="next card">'+
+			                	'<img class="name" src="" />'+
+			                	'<img class="photo" src="" />'+
+			                	'<p class="info"></p>'+
+			                	'<div class="cardbottoms"></div>'+
+			                '</div>';
+
+
+		// function onCharityData(data){
+		//     for(i in data){
+		//         var randomColour = Math.floor(Math.random()*charityColours.length);
+		//         var currentCharity = data[i];
+		//         charity = $(".card").clone();
+		//         charity.css("display","inline-block");
+		//         charity.css("background-color", charityColours[randomColour]); 
+		//         charity.attr("id","Charity" + currentCharity.id);
+		//         //charity.find("#Title").text(currentCharity.name);
+		//         charity.find(".name").attr("src", currentCharity.images[0]);
+		//         charity.find(".info").text(currentCharity.description);
+		//         $("#Container").prepend(charity);
+		//     }
+		// }
+
+		// Emulate an AJAX request and callback
+		// var a = 0;
+		// function fetchCharities(){
+		//     // Make AJAX request...
+		//     if(a == 0){
+		//     onCharityData(JSON.parse());
+		//         a = a + 1;
+		//     }
+		//     else {
+		//         onCharityData(JSON.parse('[{"id": 3, "name": "Breast cancer research", "images":  ["http://my-faith-and-fitness.com/wp-content/uploads/2014/10/breast_cancer_research_foundation.jpg"], "description": "..."}]'));
+		//         a = a + 1;
+		//     }
+		    
+		//     activateFrontCharity();
+		// }
+
+		// Apply transformations to $(e) based on its position
+		</script>
+    </body>
 </html>
