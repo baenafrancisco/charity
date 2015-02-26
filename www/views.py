@@ -47,9 +47,10 @@ def charities(request):
 	Displays a raking of charities
 	"""
 
-	context = { }
+	charities = Charity.objects.all()
 
-	return render(request,'charities.html', context)
+
+	return render(request,'charities.html', { 'charities':charities })
 
 
 def display_user_profile(request, user_id):
