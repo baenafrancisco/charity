@@ -241,7 +241,7 @@
 			          <div id="navbar" class="navbar-collapse collapse">
 			            <ul class="nav navbar-nav">
 			              <li class="active"><a href="/templates/home.html">Donate</a></li>
-			              <li><a href="/templates/charity_profile.html">Charities</a></li>
+			              <li><a href="/charities/">Charities</a></li>
 			              <li><a href="/templates/user_profile.html">Me</a></li>
 			          </div><!--/.nav-collapse -->
 			        </div><!--/.container-fluid -->
@@ -407,8 +407,8 @@
 
 		    //populate new .next card with data (using static folder cos working local atm)
 		    if(c < json.length){
-				$('.next.card .name').attr('src', "static/img/"+json[c].name+"banner.png");
-				$('.next.card .photo').attr('src', "static/img/"+json[c].images+"square.png");
+				$('.next.card .name').attr('src', imageURL+json[c].name+"banner.png");
+				$('.next.card .photo').attr('src', imageURL+json[c].images+"square.png");
 			    $('.next.card .info').html(json[c].description);
 			}else{
 				$('.next.card').html(m8youareamazeballs);
@@ -426,12 +426,13 @@
 		$(function(){
 			activateFrontCharity();
 
-			$('.this.card .name').attr('src', "static/img/"+json[0].name+"banner.png");
-			$('.this.card .photo').attr('src', "static/img/"+json[0].images+"square.png");
+			//var imageURL = "http://static.qea.me/charity/img/";
+			$('.this.card .name').attr('src', imageURL+json[0].name+"banner.png");
+			$('.this.card .photo').attr('src', json[0].images);
 		    $('.this.card .info').html(json[0].description);
 
-		    $('.next.card .name').attr('src', "static/img/"+json[1].name+"banner.png");
-			$('.next.card .photo').attr('src', "static/img/"+json[1].images+"square.png");
+		    $('.next.card .name').attr('src', imageURL+json[1].name+"banner.png");
+			$('.next.card .photo').attr('src', json[1].images);
 		    $('.next.card .info').html(json[1].description);
 
 		    $('.DropZone, #phone').height($(window).height());
