@@ -120,14 +120,34 @@ def donate_to_charity(request):
 
 	-Response
 
-	The response will be an object a status variable. The status can be one of the 3 following:
+	The response will be an object a status variable. The status can be one of the 4 following:
 		-success: 10 pence have been donated to the charity specified
 		-no_more_credit: the user has not enough credit to make donations
 		-bad_request: id parameter hasn’t been specified in the request
+		-failure: something (guess what) went wrong
 
 	'''
 
 	response = {"status":"bad_request"}
+	# If the id var is in the POST variable
+
+	if 'id' in request.POST:
+		try:
+			charity = Charity.objects.get(id=request.POST['id'])
+			user_profile = UserProfile.objects.get(user=request.user)
+			if user_profile.balance>=0.10:
+				user_profile.seen.add(charity)
+				user_profile.balance = user_profile.balance - 0.1
+				user_profile.save()
+
+				donation = Donation(user=request.user, ammount=0.10, charity=charity)
+				donation.save()
+				response["status"]="success"
+
+			else:
+				response["status"]="no_more_credit"
+		except:
+			response["status"]="failure"
 
 	# TODO: implement donate_to_charity logic
 

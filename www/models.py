@@ -56,3 +56,6 @@ class Donation(models.Model):
 	ammount = models.FloatField(default=5) # TODO: use django money
 	charity = models.ForeignKey(Charity)
 	timestamp = models.DateTimeField(auto_now_add=True)
+
+	def __unicode__(self):
+		return "<Donation: %s to %s>" % (self.user, self.charity)
