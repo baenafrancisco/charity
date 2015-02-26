@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/1.7/ref/settings/
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
+# Configurations for server
+import socket
+ON_SERVER = socket.gethostname().startswith('box679')
+ALLOWED_HOSTS = [   '.bae.im',
+                    'bae.im']
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.7/howto/deployment/checklist/
@@ -80,5 +86,7 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
-
-STATIC_URL = '/static/'
+if ON_SERVER:
+    STATIC_URL = 'http://static.qea.me/charity/'
+else:
+    STATIC_URL = '/static/'
