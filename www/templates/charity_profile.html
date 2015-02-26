@@ -53,7 +53,7 @@
 			<div class="carousel-inner" role="listbox">
 				{% for image in charity_images %}
 				<div class="item {% if forloop.counter == 1 %}active{% endif %}">
-					<img class="carouselImage" src="{{image}}"/>
+					<img class="carouselImage" src="{% static 'img/' %}{{image}}square.png"/>
 				</div>
 				{% endfor %}
 			</div>

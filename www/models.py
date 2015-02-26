@@ -23,6 +23,9 @@ class UserProfile(models.Model):
 		# return how much an user has donated
 	'''
 
+	def get_full_name(self):
+		return self.user.get_username()
+
 	def number_of_donations(self):
 		'''
 		# Returns the number of donations of an user
@@ -48,7 +51,7 @@ class Image(models.Model):
 	"""
 	Image
 	"""
-	url = models.URLField()
+	url = models.CharField(max_length=256)
 	
 	def __unicode__(self):
 		return "<Image: %s>" % self.url
