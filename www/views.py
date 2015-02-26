@@ -42,6 +42,15 @@ def home(request):
 	'''
 	return render(request,'home.html', context)
 
+def charities(request):
+	"""
+	Displays a raking of charities
+	"""
+
+	context = { }
+
+	return render(request,'charities.html', context)
+
 
 def display_user_profile(request, user_id):
 	"""

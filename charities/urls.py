@@ -8,6 +8,7 @@ urlpatterns = patterns('',
 
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', 'www.views.home', name='home'),
+    url(r'^charities/$', 'www.views.charities', name='charities'),
     url(r'^api/getnextcharities/$', 'www.views.get_next_charities', name='get_next_charities'),
     url(r'^api/donatetocharity/$', 'www.views.donate_to_charity', name='donate_to_charity'),
     url(r'^api/declinedonation/$', 'www.views.decline_donation', name='decline_donation'),
