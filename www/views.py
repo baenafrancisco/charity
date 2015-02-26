@@ -19,7 +19,43 @@ def home(request):
 
 
 
+def display_user_profile(request, user_id):
+	#user_profile = UserProfile.objects.get(user=request.user)
+	context = dict()
+	context["user_full_name"] = "John Smith"
+	context["user_top_charities"] = ["British Heart Foundation","Cancer Research UK", "Red Cross"]
+	context["user_total_donations"] = 42
+	context["user_friend_ranking"] = 10
+	context["user_world_ranking"] = 4096
+	return render(request,'user_profile.html', context)
 
+
+def display_charity_profile(request, charity_id):
+	try:
+		#charity = Charity.objects.get(id=charity_id)
+		# TODO: fetch values from model
+		context = dict()
+		context["charity_name"] = "Some Charity"
+
+		context["charity_description"] = \
+				"""Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+				Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+				Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."""
+
+		context["charity_id"] = charity_id
+
+		context["charity_images"] = ["http://i0.kym-cdn.com/photos/images/facebook/000/011/296/success_baby.jpg",
+									 "http://i1.ytimg.com/vi/Dgosi8Mp41Q/hqdefault.jpg"]
+
+		context["charity_top_donors"] = ["Bob","Fred","Jeff"]
+
+		return render(request,'charity_profile.html', context)
+	except:
+		pass
+
+	#TODO: Error page
+	return HttpResponse("<h1>No such charity</h1>")
 
 
 def api_call_example(request):

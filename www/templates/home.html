@@ -16,6 +16,9 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="{% static 'js/jquery1.11.min.js' %}"></script>
 
+		<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/themes/smoothness/jquery-ui.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js"></script>
+
 		<!-- Latest compiled and minified JavaScript -->
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>	
 		
@@ -27,12 +30,12 @@
 		margin: 0;
 		}
 		html, body {
-		height: 100%;
+			height: 100%;
 		}
 		.wrapper {
-		min-height: 100%;
-		height: auto !important;
-		height: 100%;
+		/*min-height: 100%;*/
+		/*height: auto !important;*/
+		/*height: 100%;*/
 		margin: 0 auto -4em;
 		}
 		.footer, .push {
@@ -45,61 +48,411 @@
 			float: left !important;
 		}
 		
+		.card{
+			width:90%;
+			margin:0 auto;
+			height:430px;
+			background-color:rgb(229, 229, 229);
+			border-radius:20px;
+			cursor:pointer;
+
+			-webkit-user-select: none;  /* Chrome all / Safari all */
+			-moz-user-select: none;     /* Firefox all */
+ 			-ms-user-select: none;      /* IE 10+ */
+		}
+
+		img {
+			user-drag: none; 
+			-moz-user-select: none;
+			-webkit-user-drag: none;
+		}
+
+		.this.card{
+			position:absolute;
+			z-index:2;
+		}
+
+		.next.card{
+			position:absolute;
+			z-index:1;
+			
+		}
+
+		.card .name{
+			width:100%;
+			height:100px;
+			background-color:black;
+			border-radius:20px 20px 0 0;
+
+		}
+
+		.card .photo{
+
+			width:200px;
+			height:200px;
+			display:block;
+			margin:0 auto;
+			margin-top:10px;
+			background-color:black;
+
+		}
+
+		.options{
+			height:50px;
+			width:90%;
+			margin:0 auto;
+			padding:20px 40px 0 40px;
+			position: absolute;
+			z-index: 1;
+			bottom: 70px;
+		}
+
+		.options button{
+			width:80px;
+			height:80px;
+			border-radius:50px;
+			border:none;
+			outline:none;
+		}
+
+		.nope{
+			float:left;
+			background-color:#FF7878;
+			background-image:url("{% static 'img/nope.png' %}");
+			background-repeat: no-repeat;
+			background-position: center;
+			background-size: 40%;
+			
+		}
+
+		.donate{
+			float:right;
+			background-color:#5CE16A;
+			text-align: center;
+			font-family: arial;
+			font-size:40px;
+			color:#fff;
+
+		
+		}
+
+		.card > p{
+
+			width:90%;
+			text-align: left;
+			font-family: arial;
+			font-size:20px;
+			color:#555;
+			display:block;
+			margin:0 auto;
+			margin-top:10px;
+			line-height:25px;
+		}
+
+		#phone{
+			width:400px;
+			border:1px black solid;
+			position:relative;
+			position: absolute;
+			z-index: 0;
+			left: 0;
+			right: 0;
+			margin-left: auto;
+			margin-right: auto;
+			background-color: #fff;
+		}
+
+		#LeftDrop {
+    		/*float: left;*/
+    		left:0;
+		}
+		#RightDrop {
+		    /*float: right;*/
+		    right:0;
+		}
+		.DropZone {
+		    background-color: #F0F0F0; /*F0F0F0*/
+		    /*width: 200px;
+		    height:400px;*/
+		    position: absolute;
+			z-index: -4;
+		}
+
+		.reloadDemo{
+			display:block;
+			margin:0 auto;
+			width:70%;
+			height:100px;
+			color:#fff;
+			background-color:skyblue;
+			border: none;
+			font-size: 30px;
+			cursor:pointer;
+			outline:none;
+		}
+
+		.cardbottoms{
+			background-image:url("static/img/cardbutts.png");
+			background-repeat: no-repeat;
+			background-position: center;
+			width: 100%;
+			height: 50px;
+			position: absolute;
+			margin: 0 auto;
+			bottom: -39px;
+		}
 
 		</style>
+
+
     </head>
     <body>
-    	<div class="wrapper">
-    		<nav class="navbar navbar-default">
-		        <div class="container-fluid">
-		          <div class="navbar-header">
-		            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-		              <span class="sr-only">Toggle navigation</span>
-		              <span class="icon-bar"></span>
-		              <span class="icon-bar"></span>
-		              <span class="icon-bar"></span>
-		            </button>
-		            <a class="navbar-brand" href="#">#Skid</a>
-		          </div>
-		          <div id="navbar" class="navbar-collapse collapse">
-		            <ul class="nav navbar-nav">
-		              <li class="active"><a href="#">Home</a></li>
-		              <li><a href="#">About</a></li>
-		              <li><a href="#">Contact</a></li>
-		          </div><!--/.nav-collapse -->
-		        </div><!--/.container-fluid -->
-		    </nav>
-	        <!--[if lt IE 7]>
-	            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-	        <![endif]-->
-	        <div id="content">
+    	<div id="LeftDrop" class="DropZone"></div>
+    	<div id="phone">
 
-		        <div class="container-fluid">
-		            <div class="main wrapper clearfix">
+	    	<div class="wrapper">
+	    		<nav class="navbar navbar-default">
+			        <div class="container-fluid">
+			          <div class="navbar-header">
+			            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+			              <span class="sr-only">Toggle navigation</span>
+			              <span class="icon-bar"></span>
+			              <span class="icon-bar"></span>
+			              <span class="icon-bar"></span>
+			            </button>
+			            <a class="navbar-brand" href="#"></a>
+			          </div>
+			          <div id="navbar" class="navbar-collapse collapse">
+			            <ul class="nav navbar-nav">
+			              <li class="active"><a href="#">Donate</a></li>
+			              <li><a href="#">Settings</a></li>
+			              <li><a href="#">Me</a></li>
+			          </div><!--/.nav-collapse -->
+			        </div><!--/.container-fluid -->
+			    </nav>
+		        <!--[if lt IE 7]>
+		            <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+		        <![endif]-->
+		        <div id="content">
 
-		                <article>
-		                    <header>
-		                        <h1>article header h1</h1>
-		                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec.</p>
-		                    </header>
-		                    <section>
-		                        <h2>article section h2</h2>
-		                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam sodales urna non odio egestas tempor. Nunc vel vehicula ante. Etiam bibendum iaculis libero, eget molestie nisl pharetra in. In semper consequat est, eu porta velit mollis nec. Curabitur posuere enim eget turpis feugiat tempor. Etiam ullamcorper lorem dapibus velit suscipit ultrices. Proin in est sed erat facilisis pharetra.</p>
-		                    </section>
-		                </article>
+			        <div class="container-fluid">
+			            <div class="main wrapper clearfix">
 
-		            </div> <!-- #main -->
-		        </div> <!-- #main-container -->
+			            	<!-- <div class="cards"> -->
+				                <div class="this card">
+				                	<img class="name" src="" />
+				                	<img class="photo" src="" />
+				                	<p class="info"></p>
+				                </div>
+
+				                <div class="next card">
+				                	<img class="name" src="" />
+				                	<img class="photo" src="" />
+				                	<p class="info"></p>
+				                	<div class="cardbottoms"></div>
+				                </div>
+
+				                <!-- <div class="cardbottoms"></div> -->
+			            	<!-- </div> -->
+
+			                <div class="options">
+			                	<button class="nope"></button>
+			                	<button class="donate">£1</button>
+			                </div>
+
+			            </div> <!-- #main -->
+			        </div> <!-- #main-container -->
+			    </div>
+			    <!-- <div class="push"></div>  -->
 		    </div>
-		    <div class="push"></div> 
-	    </div>
-	    <div class="footer">
-	        <div class="container-fluid">
-	            <footer class="wrapper">
-	                <h3>footer</h3>
-	            </footer>
-	       </div>
-	    </div> 
-    	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')</script>
+		    <!-- <div class="footer">
+		        <div class="container-fluid">
+		            <footer class="wrapper">
+		                <h3></h3>
+		            </footer>
+		       </div>
+		    </div> -->
+
+		</div>
+
+		<div id="RightDrop" class="DropZone"></div>
+
+    	<script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.1.min.js"><\/script>')
+
+    	// Where the charity cards originally appear in the document
+
+		var originalLeft = $(".card.this").position().left;
+		var originalTop = $(".card.this").position().top;
+
+		var jsonString = '[{"id": 1, "name": "Oxfam", "images": ["Oxfam"], "description": "Help us provide clean water to thousands of people across Africa"},'+
+		'{"id": 2, "name": "Prostate Cancer", "images": ["Prostate Cancer"], "description": "Battle Prostate Disease by contributing to awesome research"},'+
+		'{"id": 3, "name": "Dogs Trust", "images": ["Dogs Trust"], "description": "Every one lieks dogs, unless you are a cat person then just swipe left bye"},'+
+		'{"id": 4, "name": "TRAOA", "images": ["TRAOA"], "description": "tbh i dont know what this charity is..."},'+
+		'{"id": 5, "name": "Youth Sport Trust", "images": ["Youth Sport Trust"], "description": "Contribute to making young peoples live better by compuslory militery excersise programs"}]';
+		var json = JSON.parse(jsonString);
+
+		var nextCard =  '<div class="next card">'+
+			                	'<img class="name" src="" />'+
+			                	'<img class="photo" src="" />'+
+			                	'<p class="info"></p>'+
+			                	'<div class="cardbottoms"></div>'+
+			                '</div>';
+
+
+		// function onCharityData(data){
+		//     for(i in data){
+		//         var randomColour = Math.floor(Math.random()*charityColours.length);
+		//         var currentCharity = data[i];
+		//         charity = $(".card").clone();
+		//         charity.css("display","inline-block");
+		//         charity.css("background-color", charityColours[randomColour]); 
+		//         charity.attr("id","Charity" + currentCharity.id);
+		//         //charity.find("#Title").text(currentCharity.name);
+		//         charity.find(".name").attr("src", currentCharity.images[0]);
+		//         charity.find(".info").text(currentCharity.description);
+		//         $("#Container").prepend(charity);
+		//     }
+		// }
+
+		// Emulate an AJAX request and callback
+		// var a = 0;
+		// function fetchCharities(){
+		//     // Make AJAX request...
+		//     if(a == 0){
+		//     onCharityData(JSON.parse());
+		//         a = a + 1;
+		//     }
+		//     else {
+		//         onCharityData(JSON.parse('[{"id": 3, "name": "Breast cancer research", "images":  ["http://my-faith-and-fitness.com/wp-content/uploads/2014/10/breast_cancer_research_foundation.jpg"], "description": "..."}]'));
+		//         a = a + 1;
+		//     }
+		    
+		//     activateFrontCharity();
+		// }
+
+		// Apply transformations to $(e) based on its position
+
+		function applyFX(e){
+		    var position = e.position().left - originalLeft;
+		    var absoffset = Math.abs(position);
+		    e.css("transform","rotate("+ position/10 + "deg)") ;
+		    //e.css("opacity", 1-absoffset/2000);
+		}
+		
+
+		function activateFrontCharity(){
+		    $(".this.card").draggable({
+		        drag: function(ev, ui){
+		            
+		            applyFX(ui.helper);
+		        },
+		        revert: function(){
+		            console.log("Revert");
+		            var helper = $(".ui-draggable");
+		            helper.animate({    
+		                opacity: 1,
+		                 top: originalTop,
+		                left: originalLeft
+		            }, {
+		                duration: 100,
+		                step: function(now) {
+		                    applyFX(helper);
+		                }
+		              });
+
+		            return false;
+		        },
+		        stop: function(ev,ui){
+		            console.log("Stop");  
+		            
+		        }
+		    });
+		}
+
+		var c = 1;
+		var m8youareamazeballs = "<p>well done you are a great person</p><br/><button class='reloadDemo'>reload demo</button><div class='cardbottoms'></div>";
+
+		function removeCharity(ui){
+
+			c++;
+
+			// remove the .this.card
+		    $('.this.card').remove(); 
+
+		    // change .next card to .this
+		    $('.next.card .cardbottoms').remove();
+		    $('.next.card').removeClass('next').addClass('this'); 
+
+			// make new .this card draggable
+		    activateFrontCharity(); 
+
+		    // insert new .next card
+		    $(nextCard).insertBefore('.options');
+
+		    //populate new .next card with data (using static folder cos working local atm)
+		    if(c < json.length){
+				$('.next.card .name').attr('src', "static/img/"+json[c].name+"banner.png");
+				$('.next.card .photo').attr('src', "static/img/"+json[c].images+"square.png");
+			    $('.next.card .info').html(json[c].description);
+			}else{
+				$('.next.card').html(m8youareamazeballs);
+			}
+		}
+
+		$(".DropZone").droppable({
+		    drop: function( event, ui ) {
+		        ui.draggable.fadeOut(400, function(){ removeCharity(ui); });
+		      },
+		    tolerance: "intersect",
+		    
+		});
+
+		$(function(){
+			activateFrontCharity();
+
+			$('.this.card .name').attr('src', "static/img/"+json[0].name+"banner.png");
+			$('.this.card .photo').attr('src', "static/img/"+json[0].images+"square.png");
+		    $('.this.card .info').html(json[0].description);
+
+		    $('.next.card .name').attr('src', "static/img/"+json[1].name+"banner.png");
+			$('.next.card .photo').attr('src', "static/img/"+json[1].images+"square.png");
+		    $('.next.card .info').html(json[1].description);
+
+		    $('.DropZone, #phone').height($(window).height());
+		    var dropZoneWidth = (($(window).width() - $('#phone').outerWidth()) / 2);
+		    $('.DropZone').width(dropZoneWidth+"px");
+
+		    // relaod demo
+		    $('body').on('click', '.reloadDemo', function(){
+		    	location.reload();
+		    });
+
+		    // press nope button skip
+		    $('.nope').on('click', function(){
+		    	$(".this.card").animate({
+		    		left:-400
+		    	}, {
+		    		duration: 400,
+		    		complete: function(){
+		    			removeCharity();
+		    		}
+		    	});
+		    });
+
+		    // press donate button to donate
+		    $('.donate').on('click', function(){
+		    	$(".this.card").animate({
+		    		left:400
+		    	}, {
+		    		duration: 400,
+		    		complete: function(){
+		    			removeCharity();
+		    		}
+		    	}, 'ease');
+		    });
+		});
+
+		
+    	</script>
     </body>
 </html>
