@@ -47,7 +47,7 @@ def charities(request):
 	Displays a raking of charities
 	"""
 
-	context = { }
+	context = { 'charities':Charity.objects.all() }
 
 	return render(request,'charities.html', context)
 

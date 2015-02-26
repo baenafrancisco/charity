@@ -293,69 +293,30 @@
 				            </div>
 				           	<!-- Make this area scrollable and keep the title -->
 				            <div class='scroll'>
-					            	
+					            {% for charity in charities %}
 				            	<section>
 						            <div class="row">
+						            {% with charity.images.all|first as cimage %}
 						            	<div class="col-md-12">
-						            		<img class="banner" height="100" width="358" src="../static/img/Oxfambanner.png" />
+						            		<img class="banner" height="100" width="358" src="{{cimage.url}}" />
 						            	</div>
+						            {% endwith %}
 						            </div>
 
 						            <div class="row">
 						            	<div class="col-md-12">
-						            		<h3>Total donations so far:</h3>
+						            		<h3>Total donations to {{ charity.name }}:</h3>
 						            	</div>
 						            </div>
 
 						           	<div class="row">
 						            	<div class="col-md-12">
-						            		<h3>£150,334</h3>
+						            		<h3>£{{ charity.donations_received }}</h3>
 						            	</div>
 						            </div>
 						            </hr>
 					        	</section>
-
-					        	<section>
-						            <div class="row">
-						            	<div class="col-md-12">
-						            		<img class="banner" height="100" width="358" src="../static/img/Prostate Cancerbanner.png" />
-						            	</div>
-						            </div>
-
-						            <div class="row">
-						            	<div class="col-md-12">
-						            		<h3>Total donations so far:</h3>
-						            	</div>
-						            </div>
-
-						           	<div class="row">
-						            	<div class="col-md-12">
-						            		<h3>£10,002,340</h3>
-						            	</div>
-						            </div>
-						            </hr>
-					        	</section>
-
-					        	<section>
-						            <div class="row">
-						            	<div class="col-md-12">
-						            		<img class="banner" height="100" width="358" src="../static/img/Dogs Trustbanner.png" />
-						            	</div>
-						            </div>
-
-						            <div class="row">
-						            	<div class="col-md-12">
-						            		<h3>Total donations so far:</h3>
-						            	</div>
-						            </div>
-
-						           	<div class="row">
-						            	<div class="col-md-12">
-						            		<h3>£9,503,380</h3>
-						            	</div>
-						            </div>
-						            </hr>
-					        	</section>
+					        	{% endfor %}
 				        	</div>
 
 				                <!-- <div class="cardbottoms"></div> -->
