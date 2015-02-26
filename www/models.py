@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.db.models import Sum
 
 # Create your models here.
 
@@ -22,6 +23,18 @@ class UserProfile(models.Model):
 		# return how much an user has donated
 	'''
 
+	def donated_quantity(self):
+		'''
+		# Returns how much an user has donated
+		'''
+		response = 0
+		query = Donation.objects.filter(user=self).aggregate(Sum('ammount'))['ammount__sum']
+		if not query ==	None:
+			response = query
+
+		return response
+		
+
 	def __unicode__(self):
 		return "%s" % self.user	
 
@@ -43,6 +56,17 @@ class Charity(models.Model):
 	description = models.TextField(blank=True, null=True)
 	images =  models.ManyToManyField(Image, blank=True, null=True)
 	#reputation?
+
+	def donations_received(self):
+		'''
+		# Returns how much an user has donated
+		'''
+		response = 0
+		query = Donation.objects.filter(charity=self).aggregate(Sum('ammount'))['ammount__sum']
+		if not query ==	None:
+			response = query
+
+		return response
 
 	def __unicode__(self):
 		return "%s" % self.name
