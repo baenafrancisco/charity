@@ -13,5 +13,8 @@ urlpatterns = patterns('',
     url(r'^api/getnextcharities/$', 'www.views.get_next_charities', name='get_next_charities'),
     url(r'^api/donatetocharity/$', 'www.views.donate_to_charity', name='donate_to_charity'),
     url(r'^api/declinedonation/$', 'www.views.decline_donation', name='decline_donation'),
-
+    url(r'^charity/(?P<charity_id>\d+)/$', 'www.views.display_charity_profile', name="display_charity_profile"),
+    url(r'^user/(?P<user_id>\d+)/$', 'www.views.display_user_profile', name="display_user_profile"),
 )
+
+# I think thats how the ID's work... -Adam

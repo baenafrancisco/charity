@@ -18,7 +18,14 @@ def home(request):
 
 
 
+def display_user_profile(request, user_id):
+	context = {}
+	return render(request,'user_profile.html', context)
 
+
+def display_charity_profile(request, charity_id):
+	context = {}
+	return render(request,'charity_profile.html', context)
 
 
 def api_call_example(request):
