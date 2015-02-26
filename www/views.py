@@ -34,7 +34,6 @@ def home(request):
 	"""
 
 	context = { 'name':'darryl'}
-	f = UserProfile.objects.get(user=request.user)
 
 	# one line comment
 
