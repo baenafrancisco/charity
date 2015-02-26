@@ -294,14 +294,14 @@
 				           	<!-- Make this area scrollable and keep the title -->
 				            <div class='scroll'>
 					            {% for charity in charities %}
-					            
+
 				            	<section>
 						            <div class="row">
-						            {% with charity.images.all|first as cimage %}
+
 						            	<div class="col-md-12">
-						            		<img class="banner" height="100" width="358" src="{{cimage.url}}" />
+						            		<img class="banner" height="100" width="358" src="http://static.qea.me/charity/img/{{ charity.name }}banner.png" />
 						            	</div>
-						            {% endwith %}
+
 						            </div>
 
 						            <div class="row">
