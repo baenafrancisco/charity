@@ -47,15 +47,30 @@
 			margin-right: 0px !important;
 			float: left !important;
 		}
-		
+
+		.navbar-default{
+			background-color: #666666 !important;
+			border-color:transparent !important; /* important yuk */
+		}
+
+		.navbar-default .navbar-nav>li.active>a, .navbar-nav>li>a:hover{
+			color:#fff !important;
+			background-color:transparent !important;
+		}
+
+		.navbar-default .navbar-nav>li>a{
+			color:#A5A5A5;
+			font-size:20px;
+		}
+
 		.card{
 			width:90%;
 			margin:0 auto;
 			height:430px;
-			background-color:rgb(229, 229, 229);
-			border-radius:20px;
+			background-color:#fff; /*rgb(229, 229, 229)*/
+			border-radius:10px;
 			cursor:pointer;
-
+			border:1px #666666 solid;
 			-webkit-user-select: none;  /* Chrome all / Safari all */
 			-moz-user-select: none;     /* Firefox all */
  			-ms-user-select: none;      /* IE 10+ */
@@ -81,8 +96,7 @@
 		.card .name{
 			width:100%;
 			height:100px;
-			background-color:black;
-			border-radius:20px 20px 0 0;
+			border-radius:10px 10px 0 0;
 
 		}
 
@@ -93,7 +107,6 @@
 			display:block;
 			margin:0 auto;
 			margin-top:10px;
-			background-color:black;
 
 		}
 
@@ -150,6 +163,7 @@
 		}
 
 		#phone{
+
 			width:400px;
 			border:1px black solid;
 			position:relative;
@@ -159,7 +173,8 @@
 			right: 0;
 			margin-left: auto;
 			margin-right: auto;
-			background-color: #fff;
+			background-color: #666666; /*#454545*/
+
 		}
 
 		#LeftDrop {
@@ -171,7 +186,7 @@
 		    right:0;
 		}
 		.DropZone {
-		    background-color: #F0F0F0; /*F0F0F0*/
+		    background-color: #fff; /*F0F0F0*/
 		    /*width: 200px;
 		    height:400px;*/
 		    position: absolute;
@@ -199,7 +214,7 @@
 			height: 50px;
 			position: absolute;
 			margin: 0 auto;
-			bottom: -39px;
+			bottom: -38px;
 		}
 
 		</style>
@@ -208,6 +223,7 @@
     </head>
     <body>
     	<div id="LeftDrop" class="DropZone"></div>
+    	
     	<div id="phone">
 
 	    	<div class="wrapper">
@@ -224,9 +240,9 @@
 			          </div>
 			          <div id="navbar" class="navbar-collapse collapse">
 			            <ul class="nav navbar-nav">
-			              <li class="active"><a href="#">Donate</a></li>
-			              <li><a href="#">Settings</a></li>
-			              <li><a href="#">Me</a></li>
+			              <li class="active"><a href="/templates/home.html">Donate</a></li>
+			              <li><a href="/templates/charity_profile.html">Charities</a></li>
+			              <li><a href="/templates/user_profile.html">Me</a></li>
 			          </div><!--/.nav-collapse -->
 			        </div><!--/.container-fluid -->
 			    </nav>
